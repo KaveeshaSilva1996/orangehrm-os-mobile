@@ -41,8 +41,8 @@ export const API_ENDPOINT_LEAVE_TYPES = '/api/v1/leave/leave-types';
 
 // public endpoints
 export const API_ENDPOINT_API_DEFINITION = '/api/v1/api-definition';
-export const API_ENDPOINT_ENABLED_MODULES = '/api/v1/enabled-modules';
-
+export const API_ENDPOINT_ENABLED_MODULES = '/api/v1/enabled-modules'; 
+export const API_ENDPOINT_ABOUT = '/api/v1/about';
 export const prepare = (
   endpoint: string,
   params: {[key: string]: string | number} = {},
