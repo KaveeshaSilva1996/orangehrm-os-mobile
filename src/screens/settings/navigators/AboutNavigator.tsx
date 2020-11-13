@@ -31,12 +31,6 @@ import PickLeaveRequestDuration from 'screens/leave/PickLeaveRequestDuration';
 import PickLeaveRequestPartialDays from 'screens/leave/PickLeaveRequestPartialDays';
 import LeaveRequestSuccess from 'screens/leave/LeaveRequestSuccess';
 import {
-  APPLY_LEAVE,
-  APPLY_LEAVE_PICK_LEAVE_REQUEST_DAYS_CALENDAR,
-  APPLY_LEAVE_PICK_LEAVE_REQUEST_DURATION,
-  APPLY_LEAVE_PICK_LEAVE_REQUEST_PARTIAL_DAYS,
-  LEAVE_REQUEST_SUCCESS,
-  ABOUT_SUCCESS,
   ABOUT,
   DEVICE_INFO,
 } from 'screens';
@@ -82,7 +76,7 @@ class AboutNavigator extends React.Component<AboutNavigatorProps> {
           options={{
             title: 'Device Info',
           }}
-        />
+        /> 
       </Stack.Navigator>
     );
   }

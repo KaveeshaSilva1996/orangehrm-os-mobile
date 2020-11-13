@@ -29,87 +29,101 @@ import {fetchAbout} from 'store/settings/about/actions';
 import {selectAbout} from 'store/settings/about/selectors';
 import Text from 'components/DefaultText';
 
+import {navigate} from 'lib/helpers/navigation';
+import {DEVICE_INFO} from 'screens';
+import CardButton from 'screens/leave/components/CardButton';
+import Icon from 'components/DefaultIcon';
 
 class About extends React.Component<AboutProps> {
   constructor(props: AboutProps) {
     super(props);
-    props.fetchAbout()
-        
+    props.fetchAbout();
   }
+
+  onPressDeviceInfo = () => {
+    navigate(DEVICE_INFO);
+  };
 
   onRefresh = () => {
     this.props.fetchAbout();
   };
 
   render() {
-    console.log(Platform.OS);
-    console.log(Platform.Version);
-    
-    const {
-      theme,
-      about,
-    } = this.props;
+    const {theme, about} = this.props;
 
     return (
-
-
-      <MainLayout
-      onRefresh={this.onRefresh}
-      > 
-      <View style={{marginLeft:10,marginTop:20}}>
+      <MainLayout onRefresh = {this.onRefresh}> 
+      <View style={{marginLeft: 10,marginTop: 20}}>
         <View style={styles.detailsViewBlock}>
-          <View  style={styles.detailsViewLabel}>
-            <Text>{"Organization Name"}</Text>
+          <View style={styles.detailsViewLabel}>
+            <Text>{'Organization Name'}</Text>
           </View>
-          <View  style={styles.detailsView}>
+          <View style={styles.detailsView}>
               <Text> {about?.OrganizationName}</Text>
           </View>
         </View>
 
         <View style={styles.detailsViewBlock}>
-          <View  style={styles.detailsViewLabel}>
-            <Text>{"OrangeHRM Version"}</Text>
+          <View style={styles.detailsViewLabel}>
+            <Text>{'OrangeHRM Version'}</Text>
           </View>
-          <View  style={styles.detailsView}>
+          <View style={styles.detailsView}>
               <Text> {about?.OrangeHRMVersion}</Text>
           </View>
         </View>
 
         <View style={styles.detailsViewBlock}>
-          <View  style={styles.detailsViewLabel}>
-            <Text>{"Organization Country"}</Text>
+          <View style={styles.detailsViewLabel}>
+            <Text>{'Organization Country'}</Text>
           </View>
-          <View  style={styles.detailsView}>
+          <View style={styles.detailsView}>
               <Text> {about?.OrganizationCountry}</Text>
           </View>
         </View>
 
         <View style={styles.detailsViewBlock}>
-          <View  style={styles.detailsViewLabel}>
-            <Text>{"Date Format"}</Text>
+          <View style={styles.detailsViewLabel}>
+            <Text>{'Date Format'}</Text>
           </View>
-          <View  style={styles.detailsView}>
+          <View style={styles.detailsView}>
               <Text> {about?.DateFormat}</Text>
           </View>
         </View>
 
         <View style={styles.detailsViewBlock}>
-          <View  style={styles.detailsViewLabel}>
-            <Text>{"Language"}</Text>
+          <View style={styles.detailsViewLabel}>
+            <Text>{'Language'}</Text>
           </View>
-          <View  style={styles.detailsView}>
+          <View style={styles.detailsView}>
               <Text> {about?.Language}</Text>
           </View>
         </View>
       </View>
-
+      <View style={{marginTop: 24}}>
+        <CardButton
+          style={[
+            styles.cardButton,
+            {height: theme.spacing * 12},
+            styles.marginForShadow,
+          ]}
+          onPress={this.onPressDeviceInfo}>
+          <View style= {[styles.cardButtonContent]}>
+            <View style= {styles.buttonLeftView}>
+              <Icon name= {'cellphone-iphone'} />
+              <Text style= {{paddingTop: theme.spacing * 0.5}}>
+                {'Device Info'}
+              </Text>
+            </View>
+            <Icon name= {'chevron-right'} />
+          </View>
+        </CardButton>
+      </View>
       </MainLayout>
     );
   }
 }
 
-interface AboutProps
-  extends WithTheme,
+interface AboutProps extends WithTheme,
     ConnectedProps<typeof connector> {
   navigation: NavigationProp<ParamListBase>;
 }
@@ -119,16 +133,35 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   detailsView: {
-    marginTop:1,
-    marginLeft:10,
+    marginTop: 1,
+    marginLeft: 10,
   },
   detailsViewBlock: {
-    marginTop:15,
-    marginLeft:10,
+    marginTop: 15,
+    marginLeft: 10,
   },
   detailsViewLabel: {
-    marginLeft:10,
-  }
+    marginLeft: 10,
+  },
+  marginForShadow: {
+    ...Platform.select({
+      ios: {
+        marginBottom: 2,
+      },
+    }),
+  },
+  cardButton: {
+    borderRadius: 0,
+  },
+  buttonLeftView: {
+    flexDirection: 'row',
+  },
+  cardButtonContent: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+  },
 });
 
 const mapStateToProps = (state: RootState) => ({
@@ -142,8 +175,7 @@ const mapDispatchToProps = {
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 const AboutWithTheme = withTheme<AboutProps>()(
-    About, 
+  About, 
 );
 
 export default connector(AboutWithTheme);
-

@@ -11,4 +11,3 @@ export const selectAbout = createSelector<
   AboutState,
   About | undefined
 >([selectAboutState], (about) => about.about);
- 

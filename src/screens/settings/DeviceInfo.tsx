@@ -30,6 +30,7 @@ import {fetchAbout} from 'store/settings/about/actions';
 import {selectAbout} from 'store/settings/about/selectors';
 import Text from 'components/DefaultText';
 import { Left } from 'native-base';
+// import {DeviceInfo as dv} from 'react-native-device-info';
 
 
 
@@ -41,25 +42,40 @@ class DeviceInfo extends React.Component<PickLeaveRequestDaysProps> {
   }
 
   onRefresh = () => {
-    // this.props.fetchAbout();
+    this.render();
   };
 
   render() {
-    
-    console.log(Platform.OS);
-    
+    // console.log(Platform.OS);
     const {
       theme,
       about,
     } = this.props;
 
     return (
-
-
       <MainLayout
       onRefresh={this.onRefresh}
       >
+      <View style={{marginLeft:10,marginTop:20}}>
+        <View style={styles.detailsViewBlock}>
+          <View  style={styles.detailsViewLabel}>
+            <Text>{"Device OS"}</Text>
+          </View>
+          <View  style={styles.detailsView}>
+              <Text> {Platform.OS}</Text>
+          </View>
+        </View>
 
+        <View style={styles.detailsViewBlock}>
+          <View  style={styles.detailsViewLabel}>
+            <Text>{"OS Version"}</Text>
+          </View>
+          <View  style={styles.detailsView}>
+              {/* <Text> {dv.getSystemVersion()}</Text> */}
+              <Text>{Platform.Version}</Text>
+          </View>
+        </View>
+        </View>
       </MainLayout>
     );
   }
@@ -72,18 +88,20 @@ interface PickLeaveRequestDaysProps
 }
 
 const styles = StyleSheet.create({
-  calendarView: {
-    flex: 1,
-    alignItems: 'center',
-  },
   mainView: {
     flex: 1,
   },
   detailsView: {
+    marginTop:1,
+    marginLeft:10,
+  },
+  detailsViewBlock: {
     marginTop:15,
-    marginLeft:60,
-  }
-});
+    marginLeft:10,
+  },
+  detailsViewLabel: {
+    marginLeft:10,
+  }});
 
 const mapStateToProps = (state: RootState) => ({
   about: selectAbout(state),
