@@ -62,11 +62,15 @@ import {
   FULL_SCREEN_INFO,
   NO_EMPLOYEE_INFO,
   SUBHEADER_LEAVE,
+  SUBHEADER_SETTINGS,
+  ABOUT,
 } from 'screens';
 
 import ApplyLeave from 'screens/leave/navigators/ApplyLeaveNavigator';
 import MyLeaveUsage from 'screens/leave/navigators/MyLeaveUsageNavigator';
 import LeaveList from 'screens/leave/navigators/LeaveListNavigator';
+import About from 'screens/settings/navigators/AboutNavigator';
+
 import AssignLeave from 'screens/leave/navigators/AssignLeaveNavigator';
 import FullScreenInfo from 'screens/common/FullScreenInfo';
 import NoEmployeeInfo from 'screens/common/NoEmployeeInfo';
@@ -193,6 +197,12 @@ const Navigator = (props: NavigatorProps) => {
                           />
                         </>
                       ) : null}
+                      <Drawer.Screen
+                          name={ABOUT}
+                          component={About}
+                          options={{drawerLabel: 'About'}}
+                          initialParams={{subheader: SUBHEADER_SETTINGS}}
+                      />
                     </>
                   )}
                 </>

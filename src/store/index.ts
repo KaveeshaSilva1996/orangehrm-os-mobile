@@ -28,6 +28,8 @@ import applyLeaveReducer from './leave/apply-leave/reducer';
 import leaveListReducer from './leave/leave-list/reducer';
 import assignLeaveReducer from './leave/assign-leave/reducer';
 import leaveCommonReducer from './leave/common-screens/reducer';
+import aboutReducer from './settings/about/reducer';
+import deviceInfoReducer from './settings/device-info/reducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -39,6 +41,8 @@ const rootReducer = combineReducers({
   leaveList: leaveListReducer,
   assignLeave: assignLeaveReducer,
   leaveCommon: leaveCommonReducer,
+  about: aboutReducer,
+  deviceInfo: deviceInfoReducer,
 });
 
 export default rootReducer;
