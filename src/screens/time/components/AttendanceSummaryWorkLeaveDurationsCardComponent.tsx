@@ -189,7 +189,7 @@ const AttendanceSummaryWorkLeaveDurationsCardComponent = (
 
             {props.leaveData?.length > 0 ? (
               <View style={{paddingTop: theme.spacing * 2.5}}>
-                {props.leaveData.map((leave) => {
+                {props.leaveData.map((leave, key) => {
                   return (
                     <View
                       style={{

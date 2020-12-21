@@ -93,7 +93,7 @@ const AttendanceDailyChartComponent = (
                 style={{data: {fill: theme.palette.secondary}}}
                 data={props.graphWorkData}
               />
-              {props.graphLeaveData.map((leaveTypeData) => {
+              {props.graphLeaveData.map((leaveTypeData, key) => {
                 return (
                   <VictoryBar
                     style={{data: {fill: leaveTypeData.colour}}}
