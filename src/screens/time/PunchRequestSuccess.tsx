@@ -46,9 +46,12 @@ import {PunchRequestSuccessRouteParams} from 'screens/time/navigators';
 import IconButton from 'components/DefaultIconButton';
 import {
   calculateDurationBasedOnTimezone,
-  formatLastRecordDetails,
+  formatLastRecordTimeZoneOffset,
+  getDateObjectFromSaveFormat,
+  formatTime,
 } from 'lib/helpers/attendance';
 import {selectInitialRoute} from 'store/globals/selectors';
+import FormatedDate from 'components/FormatedDate';
 
 class PunchRequestSuccess extends React.Component<PunchRequestSuccessProps> {
   constructor(props: PunchRequestSuccessProps) {
@@ -270,10 +273,20 @@ class PunchRequestSuccess extends React.Component<PunchRequestSuccessProps> {
                     </View>
                     <View style={styles.flexSix}>
                       <Text>
-                        {formatLastRecordDetails(
-                          punchDateTime,
-                          punchTimeZone.toString(),
-                        )}
+                        <Text>
+                          {formatTime(
+                            getDateObjectFromSaveFormat(punchDateTime),
+                          )}
+                          {'  '}
+                        </Text>
+
+                        <FormatedDate>{punchDateTime}</FormatedDate>
+                        <Text>
+                          {'  '}
+                          {formatLastRecordTimeZoneOffset(
+                            punchTimeZone.toString(),
+                          )}
+                        </Text>
                       </Text>
                     </View>
                   </View>
@@ -341,10 +354,19 @@ class PunchRequestSuccess extends React.Component<PunchRequestSuccessProps> {
                         </View>
                         <View style={styles.flexSix}>
                           <Text>
-                            {formatLastRecordDetails(
-                              punchOutDateTime,
-                              punchOutTimeZoneOffset.toString(),
-                            )}
+                            <Text>
+                              {formatTime(
+                                getDateObjectFromSaveFormat(punchOutDateTime),
+                              )}
+                              {'  '}
+                            </Text>
+                            <FormatedDate>{punchOutDateTime}</FormatedDate>
+                            <Text>
+                              {'  '}
+                              {formatLastRecordTimeZoneOffset(
+                                punchOutTimeZoneOffset.toString(),
+                              )}
+                            </Text>
                           </Text>
                         </View>
                       </View>

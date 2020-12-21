@@ -62,7 +62,8 @@ const getDateSaveFormatFromDateObject = (date: Date) => {
  * @return {Date}
  */
 const getDateObjectFromSaveFormat = (dateString: string) => {
-  return moment(dateString).toDate();
+  let datetime = dateString.split(' ', 2);
+  return new Date(datetime[0] + 'T' + datetime[1]);
 };
 
 const NEGATIVE_DURATION = 'NEGATIVE_DURATION';
@@ -144,12 +145,8 @@ const calculateDurationBasedOnTimezone = (
  * @param datetime
  * @param timezoneOffset
  */
-const formatLastRecordDetails = (
-  datetime?: string,
-  timezoneOffset?: string,
-) => {
-  if (datetime && timezoneOffset) {
-    let displayDatetime = getUTCMomentObjectFromString(datetime).format('LLL');
+const formatLastRecordTimeZoneOffset = (timezoneOffset?: string) => {
+  if (timezoneOffset) {
     let timezone;
     if (parseFloat(timezoneOffset) > 0) {
       timezone =
@@ -157,7 +154,7 @@ const formatLastRecordDetails = (
     } else {
       timezone = (Math.round(parseFloat(timezoneOffset) * 10) / 10).toString();
     }
-    return displayDatetime + ' (GMT' + timezone + ')';
+    return ' (GMT ' + timezone + ')';
   } else {
     return null;
   }
@@ -396,7 +393,7 @@ export {
   getDateObjectFromSaveFormat,
   calculateDurationBasedOnTimezone,
   getDateSaveFormatFromDateObject,
-  formatLastRecordDetails,
+  formatLastRecordTimeZoneOffset,
   getCurrentTimeZoneOffset,
   NEGATIVE_DURATION,
   convertDateObjectToStringFormat,

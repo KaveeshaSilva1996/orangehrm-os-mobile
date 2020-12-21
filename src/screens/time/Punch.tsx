@@ -60,14 +60,17 @@ import CardContent from 'components/DefaultCardContent';
 import {
   calculateDurationBasedOnTimezone,
   getDateSaveFormatFromDateObject,
-  formatLastRecordDetails,
+  formatLastRecordTimeZoneOffset,
   getCurrentTimeZoneOffset,
   NEGATIVE_DURATION,
+  getDateObjectFromSaveFormat,
+  formatTime,
 } from 'lib/helpers/attendance';
 import {TYPE_WARN} from 'store/globals/types';
 import withGlobals, {WithGlobals} from 'lib/hoc/withGlobals';
 import {selectCurrentRoute} from 'store/globals/selectors';
 import {PUNCH} from 'screens/index';
+import FormatedDate from 'components/FormatedDate';
 
 class Punch extends React.Component<PunchProps, PunchState> {
   inputRef: RNTextInput | null;
@@ -222,11 +225,9 @@ class Punch extends React.Component<PunchProps, PunchState> {
     const {note} = this.state;
     const editable = punchStatus?.dateTimeEditable;
 
-    const lastRecordDetails = formatLastRecordDetails(
-      punchStatus?.punchTime,
+    const lastRecordTimezoneOffset = formatLastRecordTimeZoneOffset(
       punchStatus?.PunchTimeZoneOffset,
     );
-
     return (
       <MainLayout
         onRefresh={this.onRefresh}
@@ -402,7 +403,17 @@ class Punch extends React.Component<PunchProps, PunchState> {
                         </View>
                       </View>
                       <View style={[styles.flexFour]}>
-                        <Text>{lastRecordDetails}</Text>
+                        <Text>
+                          {punchStatus
+                            ? formatTime(
+                                getDateObjectFromSaveFormat(
+                                  punchStatus?.punchTime,
+                                ),
+                              )
+                            : null}
+                        </Text>
+                        <FormatedDate>{punchStatus?.punchTime}</FormatedDate>
+                        <Text>{lastRecordTimezoneOffset}</Text>
                       </View>
                     </View>
                   </View>

@@ -27,6 +27,7 @@ import CardContent from 'components/DefaultCardContent';
 import Text from 'components/DefaultText';
 import {fetchPunchStatus} from 'store/time/attendance/actions';
 import {formatTime} from 'lib/helpers/attendance';
+import FormattedDate from 'components/FormatedDate';
 
 const PunchInOutDateTimeCard = (props: PunchInOutDateTimeCardProps) => {
   const {theme, punchCurrentDateTime} = props;
@@ -65,13 +66,13 @@ const PunchInOutDateTimeCard = (props: PunchInOutDateTimeCardProps) => {
                   marginTop: theme.spacing * 0.25,
                 },
               ]}>
-              <Text
+              <FormattedDate
                 style={{
                   color: theme.typography.primaryColor,
                   fontSize: theme.spacing * 5,
                 }}>
                 {dateDisplay}
-              </Text>
+              </FormattedDate>
             </View>
             <View
               style={[styles.rowFlexDirection, styles.justifyContentCenter]}>
@@ -86,8 +87,8 @@ const PunchInOutDateTimeCard = (props: PunchInOutDateTimeCardProps) => {
                 {timeDisplay.substring(0, timeDisplay.length - 2)}
               </Text>
               <Text
+                bold
                 style={[
-                  styles.textBold,
                   {
                     color: theme.typography.primaryColor,
                     fontSize: theme.spacing * 3,

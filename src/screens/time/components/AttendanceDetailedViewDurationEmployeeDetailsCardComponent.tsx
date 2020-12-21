@@ -18,6 +18,7 @@ import {
   Holiday,
 } from 'store/leave/common-screens/types';
 import Avatar from 'components/DefaultAvatar';
+import FormatedDate from 'components/FormatedDate';
 
 class AttendanceDetailedViewDurationEmployeeDetailsCardComponent extends React.Component<AttendanceDetailedViewDurationEmployeeDetailsCardComponentProps> {
   constructor(
@@ -62,7 +63,7 @@ class AttendanceDetailedViewDurationEmployeeDetailsCardComponent extends React.C
                 {employeeName}
               </Text>
               <View>
-                <Text
+                <FormatedDate
                   style={[
                     styles.flexSix,
                     {
@@ -70,14 +71,14 @@ class AttendanceDetailedViewDurationEmployeeDetailsCardComponent extends React.C
                     },
                   ]}>
                   {date}
-                </Text>
+                </FormatedDate>
               </View>
             </View>
           </View>
         ) : null}
         <View>
           {mode === MY_ATTENDANCE ? (
-            <Text
+            <FormatedDate
               style={[
                 styles.textBold,
                 {
@@ -86,7 +87,7 @@ class AttendanceDetailedViewDurationEmployeeDetailsCardComponent extends React.C
                 },
               ]}>
               {this.props.date}
-            </Text>
+            </FormatedDate>
           ) : null}
           {this.props.workweekResult !== '-1' &&
           this.props.workweekResult !== WORK_WEEK_FULL ? (
@@ -114,7 +115,7 @@ class AttendanceDetailedViewDurationEmployeeDetailsCardComponent extends React.C
             </>
           ) : null}
           <View>
-            {this.props.holidays.map((holiday) => (
+            {this.props.holidays.map((holiday, key) => (
               <Chip
                 fullWidth={false}
                 style={[
@@ -137,7 +138,7 @@ class AttendanceDetailedViewDurationEmployeeDetailsCardComponent extends React.C
             ))}
           </View>
           <View>
-            {this.props.leaves.map((leave) => (
+            {this.props.leaves.map((leave, key) => (
               <Chip
                 style={[
                   styles.alignSelfFlexStart,
