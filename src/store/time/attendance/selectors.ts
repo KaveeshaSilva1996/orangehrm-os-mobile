@@ -78,6 +78,8 @@ export const selectStartDay = createSelector<
     ? attendanceConfiguration.startDate - 7
     : attendanceConfiguration.startDate,
 );
+// export const selectStartDay = (state: RootState) =>
+//   state.attendance.attendanceConfiguration.startDate;
 
 export const selectEndDay = createSelector<RootState, number, number>(
   [selectStartDay],

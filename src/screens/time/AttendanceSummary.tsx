@@ -41,6 +41,7 @@ import {
   EMPLOYEE_ATTENDANCE,
   MY_ATTENDANCE,
   AttendanceConfiguration,
+  DEFAULT_START_DAY,
 } from 'store/time/attendance/types';
 import {
   selectAttendanceRecords,
@@ -85,6 +86,8 @@ class AttendanceSummary extends React.Component<
       singleLeaveTypeData: [],
       graphWorkData: startGraphWorkData,
       graphLeaveData: [],
+      configurationLoaded: false,
+      startLoad: false,
     };
   }
 
@@ -102,7 +105,21 @@ class AttendanceSummary extends React.Component<
     return getWeekDayFromIndex(this.getWeekEndDayIndex(weekStartDayIndex));
   };
   componentDidMount() {
+    // console.log('mount');
     this.props.fetchAttendanceConfiguration();
+    // const configuredWeekStartDay = this.props.weekStartDay;
+    // const startDayIndex = this.props.route.params
+    //   ? this.props.route.params.startDayIndex
+    //   : configuredWeekStartDay;
+    // this.setState(
+    //   {
+    //     startDayIndex: startDayIndex,
+    //   },
+    //   () => {
+    //     console.log('monut');
+    //     // this.fetchData(this.getWeekStartDate(), this.getWeekEndDate());
+    //   },
+    // );
   }
 
   onPressDetails = (selectedDate?: moment.Moment) => {
@@ -122,25 +139,73 @@ class AttendanceSummary extends React.Component<
   };
 
   componentDidUpdate = (prevProps: AttendanceSummaryProps) => {
+    if (prevProps.currentRoute !== this.props.currentRoute) {
+      this.setState({
+        startLoad: false,
+      });
+    }
     if (
-      this.props.attendanceConfiguration !== prevProps.attendanceConfiguration
+      // prevProps.currentRoute !== this.props.currentRoute &&
+      !this.state.startLoad &&
+      this.state.configurationLoaded
     ) {
       const configuredWeekStartDay = this.props.weekStartDay;
       const startDayIndex = this.props.route.params
         ? this.props.route.params.startDayIndex
         : configuredWeekStartDay;
-      const endDayIndex = this.props.route.params
-        ? this.props.route.params.endDayIndex
-        : configuredWeekStartDay + 6;
       this.setState(
         {
           startDayIndex: startDayIndex,
+          startLoad: true,
         },
         () => {
+          console.log('first plc');
           this.fetchData(this.getWeekStartDate(), this.getWeekEndDate());
         },
       );
     }
+    if (!this.state.configurationLoaded) {
+      // this condition need to be changed
+      setTimeout(() => {
+        // this timeout set temporary solution to make sure that there is time to fetch data
+        this.setState({
+          configurationLoaded: true,
+        });
+      }, 3000);
+    }
+    if (
+      // I'm trying to remove this whole block and keep another startLoad state to check whether fetchData func has called
+      this.props.currentRoute !== this.props.route.name &&
+      this.state.configurationLoaded &&
+      false
+    ) {
+      if (
+        this.props.attendanceConfiguration !== prevProps.attendanceConfiguration
+      ) {
+        if (
+          this.props.weekStartDay !== prevProps.weekStartDay ||
+          this.props.weekStartDay === DEFAULT_START_DAY
+        ) {
+          const configuredWeekStartDay = this.props.weekStartDay;
+          const startDayIndex = this.props.route.params
+            ? this.props.route.params.startDayIndex
+            : configuredWeekStartDay;
+          const endDayIndex = this.props.route.params
+            ? this.props.route.params.endDayIndex
+            : configuredWeekStartDay + 6;
+          this.setState(
+            {
+              startDayIndex: startDayIndex,
+            },
+            () => {
+              console.log('config changed');
+              this.fetchData(this.getWeekStartDate(), this.getWeekEndDate());
+            },
+          );
+        }
+      }
+    }
+
     if (
       this.props.graphRecords !== prevProps.graphRecords &&
       this.props.graphRecords
@@ -193,7 +258,6 @@ class AttendanceSummary extends React.Component<
     if (employeeAttendance !== undefined) {
       empNumber = parseInt(employeeAttendance.employeeId, 10);
     }
-
     const startDate = convertDateObjectToStringFormat(
       weekStartDate,
       'YYYY-MM-DD',
@@ -251,6 +315,7 @@ class AttendanceSummary extends React.Component<
   };
 
   onRefresh = () => {
+    console.log('refre');
     this.fetchData(this.getWeekStartDate(), this.getWeekEndDate());
   };
 
@@ -287,8 +352,6 @@ class AttendanceSummary extends React.Component<
     const weekEndDayIndex = this.getWeekEndDayIndex();
     const weekStartDate = this.getWeekStartDate();
     const weekEndDate = this.getWeekEndDate();
-    // console.log(this.state.startDayIndex);
-    console.log(this.props.weekStartDay);
     return (
       <MainLayout
         onRefresh={this.onRefresh}
@@ -371,6 +434,8 @@ interface AttendanceSummaryState {
   graphWorkData: GraphDataPoint[];
   employeeName?: string;
   empNumber?: string;
+  configurationLoaded: boolean; // to check whether config has loaded or not
+  startLoad: boolean; // as need to call the fetchData func only once
 }
 
 const mapStateToProps = (state: RootState) => ({

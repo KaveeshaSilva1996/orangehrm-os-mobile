@@ -16,11 +16,13 @@ import {
   AttendanceState,
   AttendanceActionTypes,
   AttendanceConfiguration,
+  DEFAULT_START_DAY,
 } from './types';
 import {LOGOUT, WithLogoutAction} from 'store/auth/types';
 
 const initialState: AttendanceState = {
-  attendanceConfiguration: {startDate: 1},
+  attendanceConfiguration: {startDate: DEFAULT_START_DAY},
+  // attendanceConfiguration: {},
 };
 
 const myAttendanceReducer = (

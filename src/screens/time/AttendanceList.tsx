@@ -81,17 +81,17 @@ class AttendanceList extends React.Component<
     if (prevProps.pickedSubordinate !== this.props.pickedSubordinate) {
       this.onRefresh();
     }
-    if (this.props.weekStartDay !== prevProps.weekStartDay) {
-      const configuredWeekStartDay = this.props.weekStartDay;
-      this.setState(
-        {
-          startDayIndex: configuredWeekStartDay,
-        },
-        () => {
-          this.onRefresh();
-        },
-      );
-    }
+    // if (this.props.weekStartDay !== prevProps.weekStartDay) {
+    //   const configuredWeekStartDay = this.props.weekStartDay;
+    //   this.setState(
+    //     {
+    //       startDayIndex: configuredWeekStartDay,
+    //     },
+    //     () => {
+    //       this.onRefresh();
+    //     },
+    //   );
+    // }
   }
 
   onRefresh = () => {

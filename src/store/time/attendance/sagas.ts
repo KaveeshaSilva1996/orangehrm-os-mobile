@@ -167,6 +167,22 @@ function* fetchAttendanceGraphRecords(
         },
       ),
     );
+    console.log(
+      prepare(
+        API_ENDPOINT_ATTENDANCE_GRAPH,
+        {},
+        {
+          fromDate: action.payload.fromDate + ' 00:00:00',
+          toDate: action.payload.toDate + ' 23:59:59',
+          pendingApproval: true,
+          scheduled: true,
+          taken: true,
+          ...(action.payload.empNumber && {
+            empNumber: action.payload.empNumber,
+          }),
+        },
+      ),
+    );
     if (response.data) {
       yield put(fetchAttendanceGraphRecordsFinished(response.data));
     } else {
